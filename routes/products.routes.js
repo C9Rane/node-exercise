@@ -1,11 +1,9 @@
 import express from "express";
 import * as products from "../controllers/products.controller";
 
-const router = express.Router();
+const productsRouter = express.Router();
 
-router.get("/:id?", async (req, res, next) => {
-  let { id } = req.params;
-  let data;
+productsRouter.get("/:id?", async (req, res, next) => {
   try {
     const {id} = req.params;
     let data;
@@ -18,11 +16,10 @@ router.get("/:id?", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-
   res.json(data);
 });
 
-router.post("/", async (req, res, next) => {
+productsRouter.post("/", async (req, res, next) => {
     try{
         let productDTO = req.body;
         let data = await products.addOne(productDTO);
@@ -32,7 +29,7 @@ router.post("/", async (req, res, next) => {
     res.json(data);
 });
 
-router.put("/:id", async (req, res, next) => {
+productsRouter.put("/:id", async (req, res, next) => {
     try{
         let { id } = req.params;
         let productDTO = req.body;
@@ -43,7 +40,7 @@ router.put("/:id", async (req, res, next) => {
     res.json(data);
 });
 
-router.delete("/:id", async (req, res, next) => {
+productsRouter.delete("/:id", async (req, res, next) => {
     try {
         let { id } = req.params;
         let data = await products.removeOne(id);        
@@ -53,4 +50,4 @@ router.delete("/:id", async (req, res, next) => {
     res.json(data);
 });
 
-export default router;
+export default productsRouter;
